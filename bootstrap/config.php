@@ -1,7 +1,12 @@
 <?php
-$database_config = [
+$database_config = (object)[
     'host' => 'localhost',
-    'user' => 'root',
-    'pass' => '',
-    'db' => 'taskManager'
+    'user' => '23135das root',
+    'password' => '',
+    'db' => 'taskmanager'
+
+];
+$cssFiles = [
+    'http://localhost:8080/taskManager/assets/css/style.css'
+
 ];

@@ -350,3 +350,13 @@ span.created-at {
 .clear {
     clear: both;
 }
+
+div.dieDiv{
+    padding: 35px;
+    margin: 35px auto;
+    width: 70%;
+    background-color: #ffcaca;
+    border: 1px solid #670505;
+    color: #670505;
+    font-family: sans-serif;
+}

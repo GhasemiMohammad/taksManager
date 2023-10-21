@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <title><?= BASE_TITLE ?></title>
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <?php registerCssFile($cssFiles); ?>
 
 </head>
 
