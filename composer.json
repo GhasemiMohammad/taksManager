@@ -1,0 +1,20 @@
+{
+    "name": "mohammad/taskmanager",
+    "description": "this is simple of task manager or todo list",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mohammad\\Taskmanager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "GhasemiMohammad",
+            "email": "mohammadghasemi824@gmail.com"
+        }
+    ],
+    "require": {
+        "hekmatinasser/verta": "^1.12"
+    }
+}
