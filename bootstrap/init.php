@@ -1,8 +1,9 @@
 <?php
 include "constants.php";
-include "config.php";
-include "vendor/autoload.php";
-include "libs/helpers.php";
+defined("BASE_TITLE") or die("access denied");
+include BASE_PATH . "bootstrap/config.php";
+include BASE_PATH . "vendor/autoload.php";
+include BASE_PATH . "libs/helpers.php";
 
 try {
     $pdo = new PDO("mysql:host=$database_config->host;dbname=$database_config->db;charset=utf8mb4", $database_config->user, $database_config->password);
@@ -10,5 +11,5 @@ try {
 } catch (PDOException $e) {
     diePage("failed connect to database" . $e->getMessage());
 }
-include "libs/lib-auth.php";
-include "libs/lib-tasks.php";
+include BASE_PATH ."libs/lib-auth.php";
+include BASE_PATH ."libs/lib-tasks.php";

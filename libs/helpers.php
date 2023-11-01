@@ -1,4 +1,5 @@
 <?php
+defined("BASE_TITLE") or die("access denied");
 function registerCssFile($files)
 {
     if (!empty($files)) {
@@ -11,4 +12,22 @@ function diePage($msg, $cssFiles = null)
     registerCssFile(['http://localhost:8080/taskManager/assets/css/style.css']);
     echo "<div class='dieDiv'>$msg</div>";
     die();
+}
+function isAjaxRequest()
+{
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        return true;
+    }
+    return false;
+}
+function CheckAjaxRequest($value)
+{
+    if (!isset($value) && empty($value)) {
+        diePage("invalid");
+    }
+}
+function lengthChecker(string $value, int $length)
+{
+    if (strlen($value) < $length)
+        diePage("value must  be greater than $length");
 }

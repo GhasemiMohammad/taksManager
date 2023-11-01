@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis:300|Lato:300,400,600,700|Roboto+Condensed:300,700|Open+Sans+Condensed:300,600|Open+Sans:400,300,600,700|Maven+Pro:400,700);
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css");
 html {
     background-image: url(http://www.ultraimg.com/images/2UeGfhZ.jpg);
 }
@@ -116,7 +117,7 @@ span.created-at {
 }
 
 .main .nav {
-    width: 200px;
+    width: 250px;
     height: 100%;
     float: left;
     background-color: rgba(227, 234, 235, 0.8);
@@ -174,7 +175,7 @@ span.created-at {
 
 .main .nav .menu ul li a {
     text-decoration: none;
-    color: #0c7388;
+    color: #555;
 }
 
 .main .nav .menu ul li.active a {
@@ -200,7 +201,7 @@ span.created-at {
 }
 
 .main .nav .menu ul li:hover {
-    background-color: #999;
+    background-color: #c2c2c2;
 }
 
 .main .nav .menu ul li i {
@@ -210,7 +211,7 @@ span.created-at {
 
 .main .view {
     position: relative;
-    margin-left: 200px;
+    margin-left: 250px;
 }
 
 .main .view .viewHeader {
@@ -360,3 +361,91 @@ div.dieDiv{
     color: #670505;
     font-family: sans-serif;
 }
+div.addFolder{
+    margin: 14px;
+}
+div.addFolder input{
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 8px;
+    
+}
+div.addFolder input[type=text]{
+    width: 65%;
+    margin-right: 4px;
+    height: 18px;
+
+}
+div.addFolder input[type=text]:focus{
+    border: 1px solid #54b9cd;
+}
+div.addFolder input[type=submit]{
+    width: 18%;
+    background-color: #54b9cd;
+    color: #fff;
+    font-weight: 550;
+    font-size: 15px;
+}
+div.addFolder input[type=submit]:hover{
+    cursor:pointer;
+}
+div.folderContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 92%;
+}
+div.folderContainer div.folderAction{
+    font-size: 16px;
+    
+}
+div.folderContainer div.folderAction i{
+    margin-right: 4px;
+    color: #3498db;
+}
+div.folderContainer div.folderAction i:hover{
+    color: #2980b9;
+    cursor: pointer;
+}
+div.folderContainer div.folderAction button{
+    border: none;
+    font-size: 16px;
+}
+div.folderContainer div.folderAction a:visited {
+    color: #c11f1f;
+
+}
+div.folderContainer div.folderAction a i{
+    color: #c11f1f;
+}
+div.folderContainer div.folderAction a i:hover{
+    color: #ab1b1b;
+}
+div.changeFolderName{
+    display: none;
+
+}
+div.changeFolderName input[type=submit]{
+    background-color: #c11f1f;
+}
+div.divider{
+    display: flex;
+    align-items: center;
+}
+div.divider hr{
+    flex-grow: 1; 
+    border: none;
+    border-top: 3px solid #bcbcbc;
+    margin-right: 5px;
+}
+div.divider span{
+    margin-right: 10px;
+    font-size: 16px;
+    margin-left: 5px;
+}
+div.divider .newName{
+    display: none;
+}
+

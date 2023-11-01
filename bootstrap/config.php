@@ -1,7 +1,8 @@
 <?php
+defined("BASE_TITLE") or die("access denied");
 $database_config = (object)[
     'host' => 'localhost',
-    'user' => '23135das root',
+    'user' => 'root',
     'password' => '',
     'db' => 'taskmanager'
 
