@@ -12,16 +12,22 @@ switch ($action) {
     case "addFolder":
         $folderName = $_POST["folderName"];
         CheckAjaxRequest($folderName);
-        lengthChecker($folderName, 2);
+        lengthSTRChecker($folderName, 2);
         echo addFolder($folderName);
         break;
     case "changeFolderName":
         $folderID = $_POST["folderID"];
         $folderNewName = $_POST["folderNewName"];
         CheckAjaxRequest($folderID);
+        idChecker($folderID);
         CheckAjaxRequest($folderNewName);
-        lengthChecker($folderNewName, 2);
+        lengthSTRChecker($folderNewName, 2);
         echo updateFolderName($folderID, $folderNewName);
+        break;
+    case "deleteFolder":
+        $folderID = $_POST["folderID"];
+         idChecker($folderID);
+         echo deleteFolder($folderID);
         break;
     default:
         diePage("invalid action");

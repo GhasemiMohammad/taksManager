@@ -26,8 +26,14 @@ function CheckAjaxRequest($value)
         diePage("invalid");
     }
 }
-function lengthChecker(string $value, int $length)
+function lengthSTRChecker(string $value, int $length)
 {
     if (strlen($value) < $length)
         diePage("value must  be greater than $length");
+}
+function idChecker($id)
+{
+    if (strlen($id) <= 1 && !is_numeric($id)) {
+        diePage("value must  be number greater and  than 1");
+    }
 }

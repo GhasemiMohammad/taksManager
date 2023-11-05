@@ -1,5 +1,6 @@
 <?php
 defined("BASE_TITLE") or die("access denied");
+# select folders
 function getFolders()
 {
     global $pdo;
@@ -10,6 +11,7 @@ function getFolders()
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $result;
 }
+#add new folder
 function addFolder($folderName)
 {
     global $pdo;
@@ -17,8 +19,19 @@ function addFolder($folderName)
     $sql = "INSERT INTO `folders` (name,user_id) VALUES(?,?)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$folderName, $currentUSerID]);
-    return $stmt->rowCount();
+    if ($stmt->rowCount() === 1) {
+        $sql = "SELECT id , name FROM folders ORDER BY id DESC LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows as $row) {
+            echo $row['id'] . '-' . $row['name'];
+        }
+    } else {
+        return null;
+    }
 }
+#update folder name
 function updateFolderName($id, $folderName)
 {
     global $pdo;
@@ -26,5 +39,15 @@ function updateFolderName($id, $folderName)
     $sql = "UPDATE folders SET name = :folderName WHERE id = :id and user_id= :userID";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([":folderName" => $folderName, ":id" => $id, ":userID" => $currentUSerID]);
+    return $stmt->rowCount();
+}
+#delete folder 
+function deleteFolder($id)
+{
+    global $pdo;
+    $currentUSerID = getUserID();
+    $sql = "DELETE FROM Folders WHERE id = :id and user_id=:userID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":id" => $id, ":userID" => $currentUSerID]);
     return $stmt->rowCount();
 }

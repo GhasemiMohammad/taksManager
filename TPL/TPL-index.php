@@ -31,6 +31,7 @@
         <div class="menu">
           <div class="title">Navigation</div>
           <ul id="folders">
+            <li class="active"> <i class="fa fa-tasks"></i>Manage Tasks</li>
             <?php foreach ($folders as $folder) : ?>
               <div>
                 <div class="folderContainer">
@@ -39,12 +40,13 @@
                   </li>
                   <div class="folderAction">
                     <button id="<?= $folder->id ?>" class="editFolderButton"><i class="fa fa-edit"></i></button>
-                    <a href="?id=<?= $folder->id ?>"><i class="fa fa-trash"></i></a>
+                    <button id="<?= $folder->id ?>" class="deleteFolderButton"><i class="fa fa-trash"></i></button>
+
                   </div>
                 </div>
               <?php endforeach; ?>
 
-              <li class="active"> <i class="fa fa-tasks"></i>Manage Tasks</li>
+
           </ul>
 
         </div>
@@ -107,9 +109,14 @@
       </div>
     </div>
   </div>
+
+
+
   <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="assets/js/script.js"></script>
+
+  <!-- select and show folders -->
   <script>
     $(document).ready(function() {
       let form = $(".addFolder");
@@ -124,18 +131,32 @@
               folderName: folderName
             },
             success: function(response) {
-              alert(response);
-              if (response == "1") {
-                $('<li> <a href="#"><i class="fa fa-folder"></i>' + folderName + '</a></li>').appendTo("ul#folders");
-                location.reload()
+              if (response !== null) {
+                let responseSplit = response.split("-");
+                let folderHTML = `
+                  <div class="folderContainer">
+                    <li>
+                      <i class="fa fa-folder"></i>
+                      <span id="${responseSplit[0]}">${responseSplit[1]}</span>
+                    </li>
+                    <div class="folderAction">
+                      <button id="${responseSplit[0]}" class="editFolderButton"><i class="fa fa-edit"></i></button>
+                       <button id="${responseSplit[0]}" class="deleteFolderButton"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                `;
+                $(folderHTML).appendTo("ul#folders");
+                alert(responseSplit[1] + " folder added");
               }
             }
+
           });
         } else
           alert("enter the value for folder name");
       })
     })
   </script>
+  <!-- update folder name -->
   <script>
     $(".editFolderButton").click(function() {
       $(".addFolder").css("display", "none");
@@ -143,8 +164,8 @@
       $(".newFolder").css("display", "none");
       $(".newName").css("display", "block");
       let id = $(this).attr("id");
-      let folderCurrentName = $("#" + id).text();
-      $("#folderNewName").val(folderCurrentName);
+      let currentFolderName = $("#" + id).text();
+      $("#folderNewName").val(currentFolderName);
       $("#folderNewNameSub").click(function() {
         let folderNewName = $("#folderNewName").val();
         if (folderNewName.length < 2) {
@@ -159,10 +180,35 @@
             folderNewName: folderNewName
           },
           success: function(response) {
-            alert(response);
+            if (response == 1)
+              location.reload();
           }
         })
       })
+
+    })
+  </script>
+  <script>
+    // delete folder
+    $(".deleteFolderButton").click(function() {
+      let id = $(this).attr("id");
+      let deleteConfirm = confirm("really do u want delete this item ?");
+      if (deleteConfirm == true) {
+        $.ajax({
+          method: "POST",
+          url: "process/ajaxHandler.php",
+          data: {
+            action: "deleteFolder",
+            folderID: id,
+          },
+          success: function(response) {
+            if (response == 1) {
+              location.reload();
+
+            }
+          }
+        })
+      }
 
     })
   </script>

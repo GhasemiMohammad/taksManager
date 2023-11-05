@@ -401,27 +401,28 @@ div.folderContainer div.folderAction{
     font-size: 16px;
     
 }
-div.folderContainer div.folderAction i{
+div.folderContainer div.folderAction button.editFolderButton i{
     margin-right: 4px;
     color: #3498db;
 }
-div.folderContainer div.folderAction i:hover{
+div.folderContainer div.folderAction button.editFolderButton i:hover{
     color: #2980b9;
     cursor: pointer;
 }
 div.folderContainer div.folderAction button{
     border: none;
     font-size: 16px;
+    background: none;
 }
-div.folderContainer div.folderAction a:visited {
+div.folderContainer div.folderAction button.deleteFolderButton i{
     color: #c11f1f;
 
 }
-div.folderContainer div.folderAction a i{
-    color: #c11f1f;
-}
-div.folderContainer div.folderAction a i:hover{
+
+
+div.folderContainer div.folderAction button.deleteFolderButton i:hover{
     color: #ab1b1b;
+    cursor: pointer;
 }
 div.changeFolderName{
     display: none;
