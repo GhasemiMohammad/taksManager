@@ -14,11 +14,14 @@
 
 <body>
   <!-- partial:index.partial.html -->
+  <?php
+
+  ?>
   <div class="page">
     <div class="pageHeader">
       <div class="title">Dashboard</div>
       <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">John Doe </span>
-        <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg" width="40" height="40" />
+        <img src="" width="40" height="40" />
       </div>
     </div>
     <div class="main">
@@ -29,14 +32,14 @@
           </div>
         </div>
         <div class="menu">
-          <div class="title">Navigation</div>
+          <div class="title">Folders</div>
           <ul id="folders">
-            <li class="active"> <i class="fa fa-tasks"></i>Manage Tasks</li>
+            <li class="<?= isset($_GET["folderID"]) && $_GET["folderID"] == 0 ? 'active' : ''; ?>"> <i class="fa fa-tasks"></i><a href="?folderID=0" id="0">All Tasks</a></li>
             <?php foreach ($folders as $folder) : ?>
               <div>
                 <div class="folderContainer">
-                  <li class="">
-                    <i class="fa fa-folder"></i><span id="<?= $folder->id ?>"><?= $folder->name; ?></span>
+                  <li class="<?= (isset($_GET["folderID"]) && $_GET["folderID"] == $folder->id) ? 'active' : ''; ?>">
+                    <i class="fa fa-folder"></i><a href="?folderID=<?= $folder->id ?>" id="<?= $folder->id ?>"><?= $folder->name; ?></a>
                   </li>
                   <div class="folderAction">
                     <button id="<?= $folder->id ?>" class="editFolderButton"><i class="fa fa-edit"></i></button>
@@ -45,7 +48,16 @@
                   </div>
                 </div>
               <?php endforeach; ?>
+              <?php
+              if (isset($_GET['folderID']) && !empty($_GET['folderID'])) {
+                $folderID = $_GET['folderID'];
+                if (!validFolderURl($folderID)) {
+                  echo '<script>alert("URL Invalid");</script>';
+                  exit;
+                }
+              }
 
+              ?>
 
           </ul>
 
@@ -71,7 +83,12 @@
       </div>
       <div class="view">
         <div class="viewHeader">
-          <div class="title">Manage Tasks</div>
+          <?php if (isset($_GET['folderID'])) :; ?>
+            <div class="addTask title">
+              <input type="text" placeholder="add new task" id="addTaskTitle">
+              <input type="submit" value="+" id="AddTaskBtn">
+            </div>
+          <?php endif; ?>
           <div class="functions">
             <div class="button active">Add New Task</div>
             <div class="button">Completed</div>
@@ -82,27 +99,27 @@
           <div class="list">
             <div class="title">Today</div>
             <ul>
-              <li class="checked"><i class="fa fa-check-square-o"></i><span>Update team page</span>
-                <div class="info">
-                  <div class="button green">In progress</div><span>Complete by 25/04/2014</span>
-                </div>
-              </li>
-              <li><i class="fa fa-square-o"></i><span>Design a new logo</span>
-                <div class="info">
-                  <div class="button">Pending</div><span>Complete by 10/04/2014</span>
-                </div>
-              </li>
-              <li><i class="fa fa-square-o"></i><span>Find a front end developer</span>
-                <div class="info"></div>
-              </li>
+              <?php
+              if (sizeof($tasks) > 0) :
+                foreach ($tasks as $task) :
+              ?>
+                  <li data-taskID="<?= $task->id; ?>" id="" class="task clickable <?= $task->is_done ? 'checked' : ''; ?>">
+                    <i class="fa <?= $task->is_done ? 'fa-check-square-o' : 'fa-square-o'; ?> "></i>
+
+                    <span><?= $task->title; ?></span>
+                    <div class="info">
+                      <span>created At : <?= $task->created_at; ?></span>
+                      <button class="button"><a href="?deleteTask=<?= $task->id; ?>" onclick="return confirm('are u sure to delete this item?\n <?= $task->title; ?>')">delete</a></button>
+                    </div>
+                  </li>
+                <?php endforeach;
+              else :
+                ?>
+                <li>no task here ...</li>
+              <?php endif; ?>
             </ul>
           </div>
           <div class="list">
-            <div class="title">Tomorrow</div>
-            <ul>
-              <li><i class="fa fa-square-o"></i><span>Find front end developer</span>
-                <div class="info"></div>
-              </li>
             </ul>
           </div>
         </div>
@@ -137,7 +154,7 @@
                   <div class="folderContainer">
                     <li>
                       <i class="fa fa-folder"></i>
-                      <span id="${responseSplit[0]}">${responseSplit[1]}</span>
+                      <a href="?folderID=${responseSplit[0]}" id="${responseSplit[0]}">${responseSplit[1]}</a>
                     </li>
                     <div class="folderAction">
                       <button id="${responseSplit[0]}" class="editFolderButton"><i class="fa fa-edit"></i></button>
@@ -212,7 +229,43 @@
 
     })
   </script>
-
+  <!-- for tasks -->
+  <script>
+    // add task
+    $("#AddTaskBtn").click(function() {
+      $.ajax({
+        method: "POST",
+        url: "process/ajaxHandler.php",
+        data: {
+          action: "addTask",
+          folderID: <?= $_GET['folderID'] ?>,
+          taskTitle: $("#addTaskTitle").val()
+        },
+        success: function(response) {
+          if (response == 1) {
+            location.reload();
+          }
+        }
+      })
+    })
+  </script>
+  <script>
+    // change task status
+    $(".task").click(function() {
+      let tID = $(this).attr("data-taskid");
+      $.ajax({
+        method: "POST",
+        url: "process/ajaxHandler.php",
+        data: {
+          action: "switchDone",
+          taskID: tID
+        },
+        success: function(response) {
+          location.reload()
+        }
+      })
+    })
+  </script>
 </body>
 
 </html>

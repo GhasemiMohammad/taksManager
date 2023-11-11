@@ -5,8 +5,8 @@ if (!isAjaxRequest()) {
     diePage("invalid request");
 }
 $action = $_POST["action"];
-
 CheckAjaxRequest($action);
+
 
 switch ($action) {
     case "addFolder":
@@ -26,8 +26,20 @@ switch ($action) {
         break;
     case "deleteFolder":
         $folderID = $_POST["folderID"];
-         idChecker($folderID);
-         echo deleteFolder($folderID);
+        idChecker($folderID);
+        echo deleteFolder($folderID);
+        break;
+    case "addTask":
+        $taskTitle = $_POST["taskTitle"];
+        $folderID = $_POST["folderID"];
+        idChecker($folderID);
+        lengthSTRChecker($taskTitle, 2);
+        echo addTask($taskTitle, $folderID);
+        break;
+    case "switchDone":
+        $taskID = $_POST['taskID'];
+        idChecker($taskID);
+        changeTaskStatus($taskID);
         break;
     default:
         diePage("invalid action");

@@ -80,6 +80,7 @@ span.created-at {
     line-height: 40px;
     font-size: 1.5em;
     font-weight: 700;
+    width: 48%;
 }
 
 .pageHeader .userPanel {
@@ -232,6 +233,7 @@ span.created-at {
     padding: 0px;
     color: #AAA;
     margin-top: -18px;
+    width: 48%;
 }
 
 .main .view .viewHeader .functions {
@@ -322,17 +324,24 @@ span.created-at {
 
 .main .view .content .list ul li .info {
     float: right;
+    margin-right: 16px;
 }
+ul li div.info button.button a,
+ul li div.info button.button a:visited{
+    color: White;
+    text-decoration: none;
+    font-size: 14px;
 
+}
 .main .view .content .list ul li .info span {
     font-weight: 300;
 }
 
 .main .view .content .list ul li .info .button {
     float: right;
-    width: 100px;
+    width: 80px;
     height: 30px;
-    line-height: 30px;
+    line-height: 25px;
     background-color: #AAA;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -342,8 +351,13 @@ span.created-at {
     cursor: pointer;
     color: White;
     font-weight: 700;
+    border: 2px solid #928888;
+    outline: none;
 }
-
+.main .view .content .list ul li .info .button:hover{
+    background-color: #c11f1f;
+    border-color: #9f1a1a;
+}
 .main .view .content .list ul li .info .button.green {
     background-color: #85C157;
 }
@@ -361,33 +375,43 @@ div.dieDiv{
     color: #670505;
     font-family: sans-serif;
 }
-div.addFolder{
+div.addFolder,
+div.addTask{
     margin: 14px;
 }
-div.addFolder input{
+div.addFolder input,
+div.addTask input{
     border: none;
     outline: none;
     border-radius: 4px;
     padding: 8px;
     
 }
-div.addFolder input[type=text]{
+div.addFolder input[type=text]
+,div.addTask  input[type=text]{
     width: 65%;
     margin-right: 4px;
     height: 18px;
 
 }
-div.addFolder input[type=text]:focus{
+div.addTask  input[type=text]{
+    background-color: #eaeaea;
+    font-size: 16px;
+}
+div.addFolder input[type=text]:focus,
+div.addTask input[type=text]:focus{
     border: 1px solid #54b9cd;
 }
-div.addFolder input[type=submit]{
+div.addFolder input[type=submit],
+div.addTask input[type=submit]{
     width: 18%;
     background-color: #54b9cd;
     color: #fff;
     font-weight: 550;
     font-size: 15px;
 }
-div.addFolder input[type=submit]:hover{
+div.addFolder input[type=submit]:hover,
+div.addTask input[type=submit]:hover{
     cursor:pointer;
 }
 div.folderContainer{
@@ -449,4 +473,14 @@ div.divider span{
 div.divider .newName{
     display: none;
 }
-
+pre.popUp{
+    color: #ea7500; 
+    position: absolute;
+    z-index: 99;
+    margin-top: 20px;
+    background: #fcfcfc;
+    padding: 23px; 
+    border-radius: 8px;
+    border: 1px solid #ea7500;
+    left:35%;
+}

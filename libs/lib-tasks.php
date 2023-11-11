@@ -45,9 +45,57 @@ function updateFolderName($id, $folderName)
 function deleteFolder($id)
 {
     global $pdo;
-    $currentUSerID = getUserID();
-    $sql = "DELETE FROM Folders WHERE id = :id and user_id=:userID";
+    $sql = "DELETE FROM Folders WHERE id = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([":id" => $id, ":userID" => $currentUSerID]);
+    $stmt->execute([":id" => $id]);
+    return $stmt->rowCount();
+}
+
+#tasks CURD
+#Select tasks
+function getTasks()
+{
+    $folder = $_GET["folderID"] ?? null;
+    $folderCondition = "";
+    if (isset($folder) && !empty($folder)) {
+        $folderCondition = " and folder_id = $folder";
+    }
+    global $pdo;
+    $userID = getUserID();
+    $sql = "SELECT * FROM tasks WHERE user_id = ? $folderCondition";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$userID]);
+    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $result;
+}
+#delete task
+function deleteTask($taskID)
+{
+
+    global $pdo;
+    $sql = "DELETE FROM tasks WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":id" => $taskID]);
+    return $stmt->rowCount();
+}
+#add new task
+function addTask($taskTitle, $folderID)
+{
+    global $pdo;
+    $currentUSerID = getUserID();
+    $sql = "INSERT INTO `tasks` (title,user_id,folder_id) VALUES(?,?,?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$taskTitle, $currentUSerID, $folderID]);
+    return $stmt->rowCount();
+}
+
+#task is done or not
+function changeTaskStatus($taskID)
+{
+    global $pdo;
+    $currentUSerID = getUserID();
+    $sql = "UPDATE `tasks` SET is_done =1- is_done  WHERE id =:taskID and user_id=:userID ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":taskID" => $taskID, ":userID" => $currentUSerID]);
     return $stmt->rowCount();
 }

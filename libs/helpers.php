@@ -20,20 +20,47 @@ function isAjaxRequest()
     }
     return false;
 }
+#check ajax request set and not empty 
 function CheckAjaxRequest($value)
 {
     if (!isset($value) && empty($value)) {
         diePage("invalid");
     }
 }
+#check input length 
 function lengthSTRChecker(string $value, int $length)
 {
     if (strlen($value) < $length)
         diePage("value must  be greater than $length");
 }
+#check input length not be less than 1 and not be string 
 function idChecker($id)
 {
-    if (strlen($id) <= 1 && !is_numeric($id)) {
-        diePage("value must  be number greater and  than 1");
+    if (!isset($id) &&  !is_numeric($id)) {
+        diePage("value must  be number and greater than 1");
     }
+}
+function validFolderURl($folderID)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM folders WHERE id = :folderID");
+    $stmt->bindParam(':folderID', $folderID, PDO::PARAM_INT);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+    if ($count == 1 || $folderID == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+#die and dump function for print Database result or anythings
+function dd($var)
+{
+    echo "<pre class='popUp'>";
+    var_dump($var);
+    echo "</pre>";
+}
+function siteURL($uri)
+{
+    return BASE_URL . $uri;
 }
