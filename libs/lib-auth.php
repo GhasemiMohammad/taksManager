@@ -14,7 +14,7 @@ function emailValidation($email)
     $result = $stmt->fetchAll(PDo::FETCH_ASSOC);
 
     if ($result[0]["count(*)"] != 0) {
-        echo "<script>alert('email is exist');`</script>";
+        echo "<script>alert('email is exist');</script>";
         return false;
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -22,11 +22,22 @@ function emailValidation($email)
     }
     return true;
 }
-
+function passwordValidation($password)
+{
+    if (inputValidation($password, 8) === false)
+        return false;
+    if (!preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[@!*#^&()-+$%]/', $password)) {
+        message("weak password. use number,upper and lower case character and special character");
+        return false;
+    }
+    return true;
+}
 function register($userData)
 {
     $email = $userData['email'];
     if (emailValidation($email) === false)
+        return false;
+    if (passwordValidation($userData['password']) === false)
         return false;
     $name = $userData['name'];
     $hashPassword = password_hash($userData['password'], PASSWORD_BCRYPT);
