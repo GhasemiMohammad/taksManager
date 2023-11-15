@@ -13,6 +13,11 @@ function diePage($msg, $cssFiles = null)
     echo "<div class='dieDiv'>$msg</div>";
     die();
 }
+function message($msg, $cssClass = "dieDiv")
+{
+    registerCssFile(['http://localhost:8080/taskManager/assets/css/style.css']);
+    echo "<div class='{$cssClass}'>$msg</div>";
+}
 function isAjaxRequest()
 {
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -40,6 +45,14 @@ function idChecker($id)
         diePage("value must  be number and greater than 1");
     }
 }
+#check is inputs has this parameters or not
+function inputValidation($input, $length)
+{
+    if (!isset($input) || empty($input) || strlen($input) < $length)
+        return false;
+}
+
+
 function validFolderURl($folderID)
 {
     global $pdo;
@@ -57,10 +70,15 @@ function validFolderURl($folderID)
 function dd($var)
 {
     echo "<pre class='popUp'>";
-    var_dump($var);
+    print_r($var);
     echo "</pre>";
 }
-function siteURL($uri)
+function siteURL($uri = '')
 {
     return BASE_URL . $uri;
+}
+function redirect($url)
+{
+    header("Location: " . $url);
+    die();
 }

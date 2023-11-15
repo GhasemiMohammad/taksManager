@@ -366,7 +366,8 @@ ul li div.info button.button a:visited{
     clear: both;
 }
 
-div.dieDiv{
+div.dieDiv,
+div.success{
     padding: 35px;
     margin: 35px auto;
     width: 70%;
@@ -374,6 +375,15 @@ div.dieDiv{
     border: 1px solid #670505;
     color: #670505;
     font-family: sans-serif;
+}
+div.success{
+    padding: 35px;
+    margin: 35px auto;
+    width: 70%;
+    font-family: sans-serif;
+    background-color: #caffd2;
+    border: 1px solid #056714;
+    color: #056714;
 }
 div.addFolder,
 div.addTask{

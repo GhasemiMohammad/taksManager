@@ -14,14 +14,16 @@
 
 <body>
   <!-- partial:index.partial.html -->
-  <?php
-
-  ?>
   <div class="page">
     <div class="pageHeader">
       <div class="title">Dashboard</div>
-      <div class="userPanel"><i class="fa fa-chevron-down"></i><span class="username">John Doe </span>
-        <img src="" width="40" height="40" />
+      <div class="userPanel">
+        <a href="<?= siteURL('?logout=1') ?>">
+
+          <i class="fa fa-sign-out"></i></a>
+
+        <span class="username"><?= $user->name ?? 'unknown'; ?></span>
+        <img src="<?= $user->image ?>" width="40" height="40" />
       </div>
     </div>
     <div class="main">
